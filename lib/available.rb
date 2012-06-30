@@ -88,6 +88,18 @@ class Available
   end
 
   # @return [Array<Available::Dependency>]
+  #   A list of all the dependencies that successfully loaded.
+  def available
+    @available.values
+  end
+
+  # @return [Array<Symbol>]
+  #   A list of the names of all the dependencies that successfully loaded.
+  def available_names
+    @available.keys
+  end
+
+  # @return [Array<Available::Dependency>]
   #   A list of all the dependencies that failed to load.
   def missing
     @missing.values
