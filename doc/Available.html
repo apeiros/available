@@ -1,0 +1,1640 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Available
+  
+    &mdash; Documentation by YARD 0.8.1
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (A)</a> &raquo;
+    
+    
+    <span class="title">Available</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Available
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Available</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/available.rb<span class="defines">,<br />
+  lib/available/version.rb,<br /> lib/available/dependency.rb,<br /> lib/available/has_need_dsl.rb,<br /> lib/available/definition_dsl.rb,<br /> lib/available/gem_dependency.rb,<br /> lib/available/any_of_dependency.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Available
+Query the availability of required and optional libraries and gems with a nice interface.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>A simple example</p>
+</div></p>
+      
+      <pre class="example code"><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:nokogiri</span><span class='comma'>,</span> <span class='symbol'>:haml</span>
+  <span class='id identifier rubyid_optional'>optional</span> <span class='symbol'>:textile</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_satisfied?'>satisfied?</span>       <span class='comment'># =&gt; true/false - whether all required dependencies could be loaded
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_has'>has</span><span class='period'>.</span><span class='id identifier rubyid_nokogiri?'>nokogiri?</span>    <span class='comment'># =&gt; true/false
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_has?'>has?</span><span class='lparen'>(</span><span class='symbol'>:nokogiri</span><span class='rparen'>)</span>  <span class='comment'># =&gt; same as above
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_need'>need</span><span class='period'>.</span><span class='id identifier rubyid_nokogiri!'>nokogiri!</span>   <span class='comment'># either returns true, or raises a LoadError
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_missing'>missing</span>          <span class='comment'># =&gt; [#&lt;Available::Dependency…&gt;, …] - an array of missing dependencies
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:nokogiri</span><span class='rparen'>)</span> <span class='comment'># =&gt; nil/LoadError - the exception that occurred while loading nokogiri
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>           <span class='comment'># =&gt; [#&lt;LoadError…&gt;, …] an array of all errors that occurred while trying to require dependencies</span></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>A more complex example</p>
+</div></p>
+      
+      <pre class="example code"><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>rack_ssl:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/ssl</span><span class='tstring_end'>'</span></span> <span class='comment'># require differs from name
+</span>  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>sqlite:</span> <span class='id identifier rubyid_gem'>gem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite3-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='comment'># explicitely a gem, giving its name and the proper require
+</span>  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>markdown:</span> <span class='id identifier rubyid_any_of'>any_of</span><span class='lparen'>(</span><span class='symbol'>:maruku</span><span class='comma'>,</span> <span class='symbol'>:rdiscount</span><span class='comma'>,</span> <span class='symbol'>:bluecloth</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='symbol'>:markdown</span><span class='rparen'>)</span>       <span class='comment'># =&gt; an Available::Depencency
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='symbol'>:markdown</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>  <span class='comment'># =&gt; either :maruku, :rdiscount or :bluecloth</span></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Of course you can combine those requires</p>
+</div></p>
+      
+      <pre class="example code"><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:nokogiri</span><span class='comma'>,</span>
+           <span class='symbol'>:haml</span><span class='comma'>,</span>
+           <span class='label'>rack_ssl:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/ssl</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+          <span class='label'>sqlite:</span> <span class='id identifier rubyid_gem'>gem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite3-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='label'>markdown:</span> <span class='id identifier rubyid_any_of'>any_of</span><span class='lparen'>(</span><span class='symbol'>:maruku</span><span class='comma'>,</span> <span class='symbol'>:rdiscount</span><span class='comma'>,</span> <span class='symbol'>:bluecloth</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_optional'>optional</span> <span class='symbol'>:textile</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Available/AnyOfDependency.html" title="Available::AnyOfDependency (class)">AnyOfDependency</a></span>, <span class='object_link'><a href="Available/DefinitionDSL.html" title="Available::DefinitionDSL (class)">DefinitionDSL</a></span>, <span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Dependency</a></span>, <span class='object_link'><a href="Available/GemDependency.html" title="Available::GemDependency (class)">GemDependency</a></span>, <span class='object_link'><a href="Available/HasNeedDSL.html" title="Available::HasNeedDSL (class)">HasNeedDSL</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="Version-constant" class="">Version =
+          <div class="docstring">
+  <div class="discussion">
+    <p>The version of the &lsquo;available&rsquo; gem.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='const'>Gem</span><span class='op'>::</span><span class='const'>Version</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0.0.1</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#errors-instance_method" title="#errors (instance method)">- (Exception) <strong>errors</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A list of all exceptions that occurred while trying to load libraries.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has-instance_method" title="#has (instance method)">- (Available::HasNeedDSL) <strong>has</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Used as part of the convenience querying system.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#need-instance_method" title="#need (instance method)">- (Available::HasNeedDSL) <strong>need</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Used as part of the convenience querying system.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_optional-instance_method" title="#add_optional (instance method)">- (Object) <strong>add_optional</strong>(dependency) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Adds an optional dependency.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#add_required-instance_method" title="#add_required (instance method)">- (Object) <strong>add_required</strong>(dependency) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Adds a required dependency.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#available-instance_method" title="#available (instance method)">- (Array&lt;Available::Dependency&gt;) <strong>available</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A list of all the dependencies that successfully loaded.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#available_names-instance_method" title="#available_names (instance method)">- (Array&lt;Symbol&gt;) <strong>available_names</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A list of the names of all the dependencies that successfully loaded.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has%3F-instance_method" title="#has? (instance method)">- (Boolean) <strong>has?</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether the given library has been successfully loaded.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Available) <strong>initialize</strong>(&amp;block) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Create a new Available instance.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inspect-instance_method" title="#inspect (instance method)">- (Object) <strong>inspect</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A more digestable inspect.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#missing-instance_method" title="#missing (instance method)">- (Array&lt;Available::Dependency&gt;) <strong>missing</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A list of all the dependencies that failed to load.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#missing_names-instance_method" title="#missing_names (instance method)">- (Array&lt;Symbol&gt;) <strong>missing_names</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A list of the names of all the dependencies that failed to load.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#need%21-instance_method" title="#need! (instance method)">- (Boolean) <strong>need!</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether the given library has been successfully loaded.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#registered%3F-instance_method" title="#registered? (instance method)">- (Boolean) <strong>registered?</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether the given library was listed in the available declaration, either as
+required or as optional.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#satisfied%3F-instance_method" title="#satisfied? (instance method)">- (Boolean) <strong>satisfied?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether all required libraries have been successfully loaded.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#which-instance_method" title="#which (instance method)">- (Available::Dependency) <strong>which</strong>(name) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the dependency that was actually loaded for a given name.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Available (class)">Available</a></span></tt>) <strong>initialize</strong>(&amp;block) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Create a new Available instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="" title="Available (class)">Look at Available's docs for some examples.</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@required</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@optional</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@registered</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@available</span>  <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@missing</span>    <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@errors</span>     <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@satisfied</span>  <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='ivar'>@has</span>        <span class='op'>=</span> <span class='const'>HasNeedDSL</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='ivar'>@need</span>       <span class='op'>=</span> <span class='ivar'>@has</span>
+
+  <span class='const'>DefinitionDSL</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <span id="errors-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="errors-instance_method">
+  
+    - (<tt>Exception</tt>) <strong>errors</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A list of all exceptions that occurred while trying to load libraries.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Exception</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of all exceptions that occurred while trying to load libraries.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
+  <span class='ivar'>@errors</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="has-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="has-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Available/HasNeedDSL.html" title="Available::HasNeedDSL (class)">Available::HasNeedDSL</a></span></tt>) <strong>has</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Used as part of the convenience querying system.
+Delegates to Available#has?. That is, <code>available.has.some_library?</code> works just
+the same as <code>available.has?(:some_library)</code>.</p>
+
+<p>@example
+    available.has.some_library?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Available/HasNeedDSL.html" title="Available::HasNeedDSL (class)">Available::HasNeedDSL</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Used as part of the convenience querying system.
+Delegates to Available#has?. That is, <code>available.has.some_library?</code> works just
+the same as <code>available.has?(:some_library)</code>.</p>
+
+<p>@example
+    available.has.some_library?</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 63</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_has'>has</span>
+  <span class='ivar'>@has</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <span id="need-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="need-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Available/HasNeedDSL.html" title="Available::HasNeedDSL (class)">Available::HasNeedDSL</a></span></tt>) <strong>need</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Used as part of the convenience querying system.
+Delegates to Available#need!. That is, <code>available.need.some_library!</code> works just
+the same as <code>available.need!(:some_library)</code>.</p>
+
+<p>@example
+    available.need.some_library!</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Available/HasNeedDSL.html" title="Available::HasNeedDSL (class)">Available::HasNeedDSL</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Used as part of the convenience querying system.
+Delegates to Available#need!. That is, <code>available.need.some_library!</code> works just
+the same as <code>available.need!(:some_library)</code>.</p>
+
+<p>@example
+    available.need.some_library!</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_need'>need</span>
+  <span class='ivar'>@need</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="add_optional-instance_method">
+  
+    - (<tt>Object</tt>) <strong>add_optional</strong>(dependency) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Adds an optional dependency</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>dependency</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The dependency to add.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+180
+181
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 180</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_optional'>add_optional</span><span class='lparen'>(</span><span class='id identifier rubyid_dependency'>dependency</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_dependency'>dependency</span><span class='comma'>,</span> <span class='ivar'>@optional</span><span class='rparen'>)</span>
+
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="add_required-instance_method">
+  
+    - (<tt>Object</tt>) <strong>add_required</strong>(dependency) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Adds a required dependency</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>dependency</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The dependency to add.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 167</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_add_required'>add_required</span><span class='lparen'>(</span><span class='id identifier rubyid_dependency'>dependency</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add'>add</span><span class='lparen'>(</span><span class='id identifier rubyid_dependency'>dependency</span><span class='comma'>,</span> <span class='ivar'>@optional</span><span class='rparen'>)</span>
+  <span class='ivar'>@satisfied</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_dependency'>dependency</span><span class='period'>.</span><span class='id identifier rubyid_satisfied?'>satisfied?</span>
+
+  <span class='kw'>self</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="available-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span>&gt;</tt>) <strong>available</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A list of all the dependencies that successfully loaded.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of all the dependencies that successfully loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+92
+93
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 92</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_available'>available</span>
+  <span class='ivar'>@available</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="available_names-instance_method">
+  
+    - (<tt>Array&lt;Symbol&gt;</tt>) <strong>available_names</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A list of the names of all the dependencies that successfully loaded.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of the names of all the dependencies that successfully loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_available_names'>available_names</span>
+  <span class='ivar'>@available</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="has?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has?</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether the given library has been successfully loaded.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether the given library has been successfully loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+122
+123
+124</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 122</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_has?'>has?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='ivar'>@available</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inspect-instance_method">
+  
+    - (<tt>Object</tt>) <strong>inspect</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A more digestable inspect.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li>Object#inspect</li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+189
+190
+191
+192
+193
+194</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 189</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
+  <span class='id identifier rubyid_sprintf'>sprintf</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#&lt;%s:%x %s&gt;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+          <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='comma'>,</span>
+          <span class='id identifier rubyid_object_id'>object_id</span><span class='op'>&gt;&gt;</span><span class='int'>1</span><span class='comma'>,</span>
+          <span class='ivar'>@available</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_dep'>dep</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dep'>dep</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>false</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="missing-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span>&gt;</tt>) <strong>missing</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A list of all the dependencies that failed to load.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of all the dependencies that failed to load.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+104
+105
+106</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 104</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_missing'>missing</span>
+  <span class='ivar'>@missing</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="missing_names-instance_method">
+  
+    - (<tt>Array&lt;Symbol&gt;</tt>) <strong>missing_names</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A list of the names of all the dependencies that failed to load.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A list of the names of all the dependencies that failed to load.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_missing_names'>missing_names</span>
+  <span class='ivar'>@missing</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="need!-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>need!</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether the given library has been successfully loaded.
+If it hasn’t, #need! will raise the exception which was raised while loading the
+library.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether the given library has been successfully loaded.
+If it hasn’t, #need! will raise the exception which was raised while loading the
+library.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>LoadError</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>If the needed library couldn’t be loaded successfully, #need! raises the exception
+which was raised while loading the library.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_need!'>need!</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unknown library </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@registered</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='ivar'>@missing</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span> <span class='kw'>if</span> <span class='ivar'>@missing</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="registered?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>registered?</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method might be renamed.</p>
+</div>
+  </div>
+
+<p>Whether the given library was listed in the available declaration, either as
+required or as optional.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether the given library was listed in the available declaration, either as
+required or as optional.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 145</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_registered?'>registered?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='ivar'>@registered</span><span class='period'>.</span><span class='id identifier rubyid_has_key?'>has_key?</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="satisfied?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>satisfied?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether all required libraries have been successfully loaded.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether all required libraries have been successfully loaded.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_satisfied?'>satisfied?</span>
+  <span class='ivar'>@satisfied</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="which-instance_method">
+  
+    - (<tt><span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span></tt>) <strong>which</strong>(name) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the dependency that was actually loaded for a given name. Useful for
+any_of-dependencies.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Available/Dependency.html" title="Available::Dependency (class)">Available::Dependency</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Returns the dependency that was actually loaded for a given name. Useful for
+any_of-dependencies.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Available/DefinitionDSL.html#any_of-instance_method" title="Available::DefinitionDSL#any_of (method)">Available::DefinitionDSL#any_of</a></span></li>
+    
+      <li><span class='object_link'><a href="Available/AnyOfDependency.html" title="Available::AnyOfDependency (class)">AnyOfDependency</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+155
+156
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/available.rb', line 155</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_dep'>dep</span> <span class='op'>=</span> <span class='ivar'>@available</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_dep'>dep</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_dep'>dep</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Sat Jun 30 18:55:04 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

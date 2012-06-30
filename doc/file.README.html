@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.1
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1 id="readme">README</h1>
+
+<h2 id="summary">Summary</h2>
+<p>Query the availability of required and optional libraries and gems with a nice interface.</p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li>A nice API</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+<p><code>gem install available</code></p>
+
+<h2 id="usage">Usage</h2>
+
+<p>A simple example</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:nokogiri</span><span class='comma'>,</span> <span class='symbol'>:haml</span>
+  <span class='id identifier rubyid_optional'>optional</span> <span class='symbol'>:textile</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_satisfied?'>satisfied?</span>       <span class='comment'># =&gt; true/false - whether all required dependencies could be loaded
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_has'>has</span><span class='period'>.</span><span class='id identifier rubyid_nokogiri?'>nokogiri?</span>    <span class='comment'># =&gt; true/false
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_has?'>has?</span><span class='lparen'>(</span><span class='symbol'>:nokogiri</span><span class='rparen'>)</span>  <span class='comment'># =&gt; same as above
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_need'>need</span><span class='period'>.</span><span class='id identifier rubyid_nokogiri!'>nokogiri!</span>   <span class='comment'># either returns true, or raises a LoadError
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_missing'>missing</span>          <span class='comment'># =&gt; [#&lt;Available::Dependency…&gt;, …] - an array of missing dependencies
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='symbol'>:nokogiri</span><span class='rparen'>)</span> <span class='comment'># =&gt; nil/LoadError - the exception that occurred while loading nokogiri
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span>           <span class='comment'># =&gt; [#&lt;LoadError…&gt;, …] an array of all errors that occurred while trying to require dependencies
+</span></code></pre>
+
+<p>A more complex example</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>rack_ssl:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/ssl</span><span class='tstring_end'>'</span></span> <span class='comment'># require differs from name
+</span>  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>sqlite:</span> <span class='id identifier rubyid_gem'>gem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite3-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='comment'># explicitely a gem, giving its name and the proper require
+</span>  <span class='id identifier rubyid_requires'>requires</span> <span class='label'>markdown:</span> <span class='id identifier rubyid_any_of'>any_of</span><span class='lparen'>(</span><span class='symbol'>:maruku</span><span class='comma'>,</span> <span class='symbol'>:rdiscount</span><span class='comma'>,</span> <span class='symbol'>:bluecloth</span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='symbol'>:markdown</span><span class='rparen'>)</span>       <span class='comment'># =&gt; an Available::Depencency
+</span><span class='id identifier rubyid_source'>source</span><span class='period'>.</span><span class='id identifier rubyid_which'>which</span><span class='lparen'>(</span><span class='symbol'>:markdown</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>  <span class='comment'># =&gt; either :maruku, :rdiscount or :bluecloth
+</span></code></pre>
+
+<p>Of course you can combine those requires</p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_source'>source</span> <span class='op'>=</span> <span class='const'>Available</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_requires'>requires</span> <span class='symbol'>:nokogiri</span><span class='comma'>,</span>
+           <span class='symbol'>:haml</span><span class='comma'>,</span>
+           <span class='label'>rack_ssl:</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>rack/ssl</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+          <span class='label'>sqlite:</span> <span class='id identifier rubyid_gem'>gem</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite3-ruby</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>sqlite</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='label'>markdown:</span> <span class='id identifier rubyid_any_of'>any_of</span><span class='lparen'>(</span><span class='symbol'>:maruku</span><span class='comma'>,</span> <span class='symbol'>:rdiscount</span><span class='comma'>,</span> <span class='symbol'>:bluecloth</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_optional'>optional</span> <span class='symbol'>:textile</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="http://rdoc.info/github/apeiros/available/">Online API Documentation</a></li>
+  <li><a href="https://github.com/apeiros/available">Public Repository</a></li>
+  <li><a href="https://github.com/apeiros/available/issues">Bug Reporting</a></li>
+  <li><a href="https://rubygems.org/gems/available">RubyGems Site</a></li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>You can use this code under the <a href="file.LICENSE.html" title="BSD-2-Clause License">BSD-2-Clause License</a>, free of charge.
+If you need a different license, please ask the author.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Sat Jun 30 18:55:03 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
