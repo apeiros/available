@@ -1,0 +1,8 @@
+TODO
+====
+
+* Provide alternative strategies instead of requiring ahead
+  * Probe $LOAD_PATH + Gem-API (this is less reliable, though, since anything could
+    hook into require - just like rubygems already does)
+  * Lazy require - require upon querying availability, errors etc.
+* Replace method_missing with generated methods
