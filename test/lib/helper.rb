@@ -16,6 +16,31 @@ module Kernel
 end
 
 class Test::Unit::TestCase
+  def self.inherited(by)
+    by.init
+    super
+  end
+
+  def self.init
+    @setups = []
+  end
+
+  def self.setup(&block)
+    @setups ||= []
+    @setups << block
+  end
+
+  class << self
+    attr_reader :setups
+  end
+
+  def setup
+    self.class.setups.each do |setup|
+      instance_eval(&setup)
+    end
+    super
+  end
+
   def self.test(desc, &impl)
     define_method("test #{desc}", &impl)
   end
