@@ -138,7 +138,7 @@ class Available
   #   Returns the dependency that was actually loaded for a given name. Useful for
   #   any_of-dependencies.
   #
-  # @see Available::DeclarationDSL#any_of
+  # @see Available::DefinitionDSL#any_of
   # @see Available::AnyOfDependency
   def which(name)
     dep = @available[name]
