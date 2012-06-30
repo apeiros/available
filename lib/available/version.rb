@@ -7,5 +7,7 @@ rescue LoadError
 end
 
 class Available
+
+  # The version of the 'available' gem.
   Version = Gem::Version.new("0.0.1")
 end
