@@ -42,7 +42,7 @@ class Available
 
     # @param [Symbol] name
     #   The name of this dependency.
-    #   @see Available::Dependency#name
+    #   See {Available::Dependency#name}
     #
     # @param [Array<Available::Dependeny>] list
     #   A list of all dependency candidates. The candidates are tried in the order in

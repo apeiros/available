@@ -32,15 +32,18 @@ class Available
     #   If you don't supply it, the name is used.
     # @param [String] gem_version
     #   The gem version specification.
-    #   @see Gem::Version, Gem::Requirement More information on gem version specs.
-    #   @example A list of specifications and what they mean (from Gem::Version, v 1.8.24)
+    #
+    #   See {Gem::Version} and {Gem::Requirement} for more information on gem version
+    #   specs.
+    #
+    #   A list of specifications and what they mean (from Gem::Version, v 1.8.24)
+    #
     #       Specification From  ... To (exclusive)
     #       ">= 3.0"      3.0   ... ∞
     #       "~> 3.0"      3.0   ... 4.0
     #       "~> 3.0.0"    3.0.0 ... 3.1
     #       "~> 3.5"      3.5   ... 4.0
     #       "~> 3.5.0"    3.5.0 ... 3.6
-    # 
     def initialize(name, gem_name, require_path=nil, gem_version=nil)
       super(name, require_path)
       @gem_name = gem_name
