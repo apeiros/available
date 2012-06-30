@@ -51,8 +51,8 @@ Of course you can combine those requires
       requires :nokogiri,
                :haml,
                rack_ssl: 'rack/ssl',
-              sqlite: gem('sqlite3-ruby', 'sqlite'),
-              markdown: any_of(:maruku, :rdiscount, :bluecloth)
+               sqlite:   gem('sqlite3-ruby', 'sqlite'),
+               markdown: any_of(:maruku, :rdiscount, :bluecloth)
 
       optional :textile
     end
