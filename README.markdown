@@ -21,6 +21,41 @@ Installation
 Usage
 -----
 
+A simple example
+
+    source = Available.new do
+      requires :nokogiri, :haml
+      optional :textile
+    end
+    source.satisfied?       # => true/false - whether all required dependencies could be loaded
+    source.has.nokogiri?    # => true/false
+    source.has?(:nokogiri)  # => same as above
+    source.need.nokogiri!   # either returns true, or raises a LoadError
+    source.missing          # => [#<Available::Dependency…>, …] - an array of missing dependencies
+    source.error(:nokogiri) # => nil/LoadError - the exception that occurred while loading nokogiri
+    source.errors           # => [#<LoadError…>, …] an array of all errors that occurred while trying to require dependencies
+
+A more complex example
+
+    source = Available.new do
+      requires rack_ssl: 'rack/ssl' # require differs from name
+      requires sqlite: gem('sqlite3-ruby', 'sqlite') # explicitely a gem, giving its name and the proper require
+      requires markdown: any_of(:maruku, :rdiscount, :bluecloth)
+    end
+    source.which(:markdown)       # => an Available::Depencency
+    source.which(:markdown).name  # => either :maruku, :rdiscount or :bluecloth
+
+Of course you can combine those requires
+
+    source = Available.new do
+      requires :nokogiri,
+               :haml,
+               rack_ssl: 'rack/ssl',
+              sqlite: gem('sqlite3-ruby', 'sqlite'),
+              markdown: any_of(:maruku, :rdiscount, :bluecloth)
+
+      optional :textile
+    end
 
 
 Links
