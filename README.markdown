@@ -67,6 +67,13 @@ Links
 * [RubyGems Site](https://rubygems.org/gems/available)
 
 
+Running the Tests
+-----------------
+
+You can run the tests using `ruby test/runner.rb` (I prefer `ruby -rturn test/runner.rb`,
+but that's your call). Using test/runner is not a requirement. but it makes things easier.
+
+
 License
 -------
 
